@@ -10,15 +10,8 @@
 2. 导入环境 environment.yaml  
    `conda env update -f=environment.yaml`
    
-3. 如不想运行以上步骤则： 
-
-   ```
-   pip3 install -r environment_cpu.txt  #cpu用户
-   pip3 install -r environment_gpu.txt  #gpu用户
-```
-   
-   
-
+3. 如不想运行以上步骤则： pip3 install -r environment_cpu.txt  #cpu用户
+                       pip3 install -r environment_gpu.txt  #gpu用户
 #### Quick start
 
 1. git clone 这个项目
