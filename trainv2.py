@@ -3,20 +3,20 @@ import os
 import numpy as np
 import tensorflow as tf
 import input_data
-import model
+import modelv2
 
 # 变量声明
 N_CLASSES = 3 # 分类数
-IMG_W = 128  # resize图像，太大的话训练时间久
-IMG_H = 128
+IMG_W = 512  # resize图像，太大的话训练时间久
+IMG_H = 512
 BATCH_SIZE = 20
 CAPACITY = 200
-MAX_STEP = 700 # 一般大于10K
-init_learning_rate = 1e-4  # 一般小于0.0001
+MAX_STEP = 300 # 一般大于10K
+learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
 train_dir = '/content/gdrive/My Drive/twokidneyca/inputdata'  # 训练样本的读入路径
-logs_train_dir = '/content/gdrive/My Drive/twokidneyca/save'  # logs存储路径
+logs_train_dir = '/content/gdrive/My Drive/twokidneyca/savev2'  # logs存储路径
 
 # train, train_label = input_data.get_files(train_dir)
 train, train_label, val, val_label = input_data.get_files(train_dir, 0.3)
@@ -26,15 +26,15 @@ train_batch, train_label_batch = input_data.get_batch(train, train_label, IMG_W,
 val_batch, val_label_batch = input_data.get_batch(val, val_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
 
 # 训练操作定义
-train_logits = model.inference(train_batch, BATCH_SIZE, N_CLASSES)
-train_loss = model.losses(train_logits, train_label_batch)
-train_op = model.trainning(train_loss, learning_rate)
-train_acc = model.evaluation(train_logits, train_label_batch)
+train_logits = modelv2v2.inference(train_batch, BATCH_SIZE, N_CLASSES)
+train_loss = modelv2v2.losses(train_logits, train_label_batch)
+train_op = modelv2v2.trainning(train_loss, learning_rate)
+train_acc = modelv2v2.evaluation(train_logits, train_label_batch)
 
 # 测试操作定义
-test_logits = model.inference(val_batch, BATCH_SIZE, N_CLASSES)
-test_loss = model.losses(test_logits, val_label_batch)
-test_acc = model.evaluation(test_logits, val_label_batch)
+test_logits = modelv2v2.inference(val_batch, BATCH_SIZE, N_CLASSES)
+test_loss = modelv2v2.losses(test_logits, val_label_batch)
+test_acc = modelv2v2.evaluation(test_logits, val_label_batch)
 
 # 这个是log汇总记录
 summary_op = tf.summary.merge_all()
@@ -43,7 +43,7 @@ summary_op = tf.summary.merge_all()
 sess = tf.Session()
 # 产生一个writer来写log文件
 train_writer = tf.summary.FileWriter(logs_train_dir, sess.graph)
-val_writer = tf.summary.FileWriter(logs_test_dir, sess.graph)
+#val_writer = tf.summary.FileWriter(logs_test_dir, sess.graph)
 # 产生一个saver来存储训练好的模型
 saver = tf.train.Saver()
 # 所有节点初始化
@@ -66,8 +66,8 @@ try:
             summary_str = sess.run(summary_op)
             train_writer.add_summary(summary_str, step)
         # 每隔100步，保存一次训练好的模型
-        if (step + 100) == MAX_STEP:
-            checkpoint_path = os.path.join(logs_train_dir, 'model.ckpt')
+        if ((step + 100) == MAX_STEP):
+            checkpoint_path = os.path.join(logs_train_dir, 'modelv2.ckpt')
             saver.save(sess, checkpoint_path, global_step=step)
 
 except tf.errors.OutOfRangeError:
