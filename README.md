@@ -2,13 +2,30 @@
 
 
 这是一个图像识别项目，基于 tensorflow，fork自原项目four_flouwers,现有的 CNN 网络可以识别两种肾肿瘤2dCT图像。适合新手对使用 tensorflow 进行一个完整的图像识别过程有一个大致轮廓。项目包括对数据集的处理，从硬盘读取数据，CNN 网络的定义，训练过程，还实现了一个 GUI 界面用于使用训练好的网络。
+
+#### 原始数据集及图片处理、扩增方法
 原始数据集包括RCC100张，Papillary100张，其他非肿瘤图像100张。肿瘤数据来源于TCIA官网。
 
+数据2D图片由Itksnap3.6软件读取导出。Itksnap（最新3.8）下载地址是：http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.SNAP3
+
+Itksnap进行影像数据处理的压箱绝技（？）详见B站番组[itksnap step1]:
+
+1. EP0:itksnap从入门到获取region of interest.
+2. EP1：从水平切面导出病灶.[https://www.bilibili.com/video/BV1Py4y127mQ]
+3. EP2：itksanp解剖涂色书：图像分割.
+4. ......
+
+图像扩增工具包括传统扩增工具（basicaug/）和GAN数据生成器（GANaug/），在使用basicaug时需要手动安装opencv：pip3 install opencv-python
+
+GAN工具需要在数据量较大时进行测试，通过basicaug可实现原始数据24倍扩增。
+
+
+
 #### 可选网络构架
-1.简单CNN及加一倍层数的v2
+1. 简单CNN及加一倍层数的v2
 2. googlenetV1-4
-3.resnet
-4.densenet （untested）
+3. resnet
+4. densenet （untested）
 
 #### Require
 
