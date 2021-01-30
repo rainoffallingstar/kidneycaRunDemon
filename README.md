@@ -17,7 +17,7 @@ Itksnap进行影像数据处理的压箱绝技（？）详见B站番组[itksnap 
 
 图像扩增工具包括传统扩增工具（basicaug/）和GAN数据生成器（GANaug/），在使用basicaug时需要手动安装opencv：pip3 install opencv-python
 
-GAN工具需要在数据量较大时进行测试，通过basicaug可实现原始数据24倍扩增。
+GAN工具需要在数据量较大时进行测试，通过basicaug可实现原始数据24倍扩增，内含resize工具批量修改数据集图片大小。
 
 
 
