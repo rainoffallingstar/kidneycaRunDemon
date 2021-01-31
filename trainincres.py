@@ -7,16 +7,17 @@ import inception_resnet_v1
 
 # 变量声明
 N_CLASSES = 3 # 分类数
-IMG_W = 512  # resize图像，太大的话训练时间久
-IMG_H = 512
+IMG_W = 128  # resize图像，太大的话训练时间久
+IMG_H = 128
 BATCH_SIZE = 20
-CAPACITY = 520
-MAX_STEP = 700 # 一般大于10K
+CAPACITY = 200
+MAX_STEP = 10000 # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
-train_dir = '/content/gdrive/My Drive/twokidneyca/inputdata'  # 训练样本的读入路径
-logs_train_dir = '/content/gdrive/My Drive/twokidneyca/save'  # logs存储路径
+train_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/inputdata'  # 训练样本的读入路径
+logs_train_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/save'  # logs存储路径
+logs_test_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/logtest'
 
 # train, train_label = input_data.get_files(train_dir)
 train, train_label, val, val_label = input_data.get_files(train_dir, 0.3)
@@ -66,7 +67,7 @@ try:
             summary_str = sess.run(summary_op)
             train_writer.add_summary(summary_str, step)
         # 每隔100步，保存一次训练好的模型
-        if (step + 100) == MAX_STEP:
+        if ((step + 1) == MAX_STEP):
             checkpoint_path = os.path.join(logs_train_dir, 'inception_resnet_v1.ckpt')
             saver.save(sess, checkpoint_path, global_step=step)
 
