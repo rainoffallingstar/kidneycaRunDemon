@@ -51,6 +51,6 @@ logs_train_dir = 'D:/DL/kidneyca/save'  # logs存储路径
 为你本机的目录。
 
 4. 运行dataaugrcc16.py等文件获得数据增强24倍增益。
-5. 运行 train.py 开始训练。
+5. 运行 train.py 开始训练。运行tensorboard：tensorboard --logdir=[写你的train_dir]
 6. 训练完成后，修改 test.py 中的`logs_train_dir = 'D:/DL/kidneyca/save/'`为你的目录。
 7. 运行 test.py 或者 gui.py 查看结果。
