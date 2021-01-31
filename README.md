@@ -12,7 +12,7 @@ Itksnap进行影像数据处理的压箱绝技（？）详见B站番组[itksnap 
 
 1. EP0:itksnap从入门到获取region of interest.[https://www.bilibili.com/video/BV1Xy4y1177d/]
 2. EP1：从水平切面导出病灶.[https://www.bilibili.com/video/BV1Py4y127mQ]
-3. EP2：itksanp解剖涂色书：图像分割.
+3. EP2：itksanp解剖涂色书：图像分割.[https://www.bilibili.com/video/BV1Sv4y1f7FR]
 4. ......
 
 图像扩增工具包括传统扩增工具（basicaug/）和GAN数据生成器（GANaug/），在使用basicaug时需要手动安装opencv：pip3 install opencv-python
