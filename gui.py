@@ -65,7 +65,7 @@ class HelloFrame(wx.Frame):
                       wx.OK | wx.ICON_INFORMATION)
 
     def OnSelect(self, event):
-        wildcard = "image source(*.jpg)|*.jpg|" \
+        wildcard = "image source(*.png)|*.png|" \
                    "Compile Python(*.pyc)|*.pyc|" \
                    "All file(*.*)|*.*"
         dialog = wx.FileDialog(None, "Choose a file", os.getcwd(),
@@ -73,7 +73,7 @@ class HelloFrame(wx.Frame):
         if dialog.ShowModal() == wx.ID_OK:
             print(dialog.GetPath())
             img = Image.open(dialog.GetPath())
-            imag = img.resize([64, 64])
+            imag = img.resize([128, 128])
             image = np.array(imag)
             result = evaluate_one_image(image)
             result_text = wx.StaticText(self.pnl, label=result, pos=(320, 0))
