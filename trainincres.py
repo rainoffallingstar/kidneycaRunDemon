@@ -11,7 +11,7 @@ IMG_W = 128  # resize图像，太大的话训练时间久
 IMG_H = 128
 BATCH_SIZE = 20
 CAPACITY = 200
-MAX_STEP = 10000 # 一般大于10K
+MAX_STEP = 200 # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
@@ -67,7 +67,7 @@ try:
             summary_str = sess.run(summary_op)
             train_writer.add_summary(summary_str, step)
         # 每隔100步，保存一次训练好的模型
-        if ((step + 1) == MAX_STEP):
+        if ((step == 100) or (step == 500) or ((step + 100 ) == MAX_STEP)):
             checkpoint_path = os.path.join(logs_train_dir, 'inception_resnet_v1.ckpt')
             saver.save(sess, checkpoint_path, global_step=step)
 
