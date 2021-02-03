@@ -12,12 +12,12 @@ IMG_H = 128
 BATCH_SIZE = 20
 CAPACITY = 200
 MAX_STEP = 700 # 一般大于10K
-init_learning_rate = 1e-4  # 一般小于0.0001
+learning_rate = 1e-4  # 一般小于0.0001
 
 # 获取批次batch
 train_dir = '/content/gdrive/My Drive/twokidneyca/inputdata'  # 训练样本的读入路径
 logs_train_dir = '/content/gdrive/My Drive/twokidneyca/save'  # logs存储路径
-logs_test_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/logtest'
+logs_test_dir = '/content/gdrive/My Drive/twokidneyca/logtest'
 # train, train_label = input_data.get_files(train_dir)
 train, train_label, val, val_label = input_data.get_files(train_dir, 0.3)
 # 训练数据及标签
@@ -62,11 +62,11 @@ try:
     for step in np.arange(MAX_STEP):
         if coord.should_stop():
             break
-        _, tra_loss, tra_acc ,val_loss, val_acc = sess.run([train_op, train_loss, train_acc, val_loss, val_acc])
+        _, tra_loss, tra_acc ,vali_loss, vali_acc = sess.run([train_op, train_loss, train_acc, val_loss, val_acc])
 
         # 每隔50步打印一次当前的loss以及acc，同时记录log，写入writer
         if step % 10 == 0:
-            print('Step %d, train loss = %.2f, train accuracy = %.2f%%, val loss = %.2f, val accuracy = %.2f%%' % (step, tra_loss, tra_acc * 100.0,val_loss * 100.0, val_acc * 100.0))
+            print('Step %d, train loss = %.2f, train accuracy = %.2f%%, val loss = %.2f, val accuracy = %.2f%%' % (step, tra_loss, tra_acc * 100.0,vali_loss * 100.0, vali_acc * 100.0))
             summary_str = sess.run(summary_op)
             train_writer.add_summary(summary_str, step)
         # 每隔100步，保存一次训练好的模型
