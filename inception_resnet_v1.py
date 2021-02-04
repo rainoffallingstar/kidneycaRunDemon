@@ -1,4 +1,3 @@
-​
 import tensorflow as tf
 import numpy as np
 
@@ -189,5 +188,3 @@ def evaluation(logits, labels):
         accuracy = tf.reduce_mean(correct)
         tf.summary.scalar(scope.name + '/accuracy', accuracy)
     return accuracy
-
-​
