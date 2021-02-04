@@ -51,7 +51,7 @@ def get_files(file_dir, ratio):
     # 将所得List分为两部分，一部分用来训练tra，一部分用来测试val
     # ratio是测试集的比例
     n_sample = len(all_label_list)
-    n_val = int(math.ceil(n_sample * ratio))  # 测试样本数
+    n_val = int(math.ceil(n_sample * 0.2))  # 测试样本数,注意：0.2原py写ratio
     n_train = n_sample - n_val  # 训练样本数
 
     tra_images = all_image_list[0:n_train]
@@ -84,7 +84,7 @@ def get_batch(image, label, image_W, image_H, batch_size, capacity):
     image_contents = tf.read_file(input_queue[0])  # read img from a queue
 
     # step2：将图像解码，不同类型的图像不能混在一起，要么只用jpeg，要么只用png等。
-    image = tf.image.decode_jpeg(image_contents, channels=3)
+    image = tf.image.decode_png(image_contents, channels=3)
 
     # step3：数据预处理，对图像进行旋转、缩放、裁剪、归一化等操作，让计算出的模型更健壮。
     image = tf.image.resize_image_with_crop_or_pad(image, image_W, image_H)

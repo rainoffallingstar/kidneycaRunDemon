@@ -11,14 +11,13 @@ IMG_W = 128  # resize图像，太大的话训练时间久
 IMG_H = 128
 BATCH_SIZE = 20
 CAPACITY = 200
-MAX_STEP = 200 # 一般大于10K
-learning_rate = 0.0001  # 一般小于0.0001
+MAX_STEP = 700 # 一般大于10K
+learning_rate = 1e-4  # 一般小于0.0001
 
 # 获取批次batch
-train_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/inputdata'  # 训练样本的读入路径
-logs_train_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/save'  # logs存储路径
-logs_test_dir = 'F:/kidneycaRunDemon-Akimoto-manazu/logtest'
-
+train_dir = '/content/gdrive/My Drive/twokidneyca/inputdata'  # 训练样本的读入路径
+logs_train_dir = '/content/gdrive/My Drive/twokidneyca/save'  # logs存储路径
+logs_test_dir = '/content/gdrive/My Drive/twokidneyca/logtest'
 # train, train_label = input_data.get_files(train_dir)
 train, train_label, val, val_label = input_data.get_files(train_dir, 0.3)
 # 训练数据及标签
@@ -32,6 +31,10 @@ train_loss = inception_resnet_v1.losses(train_logits, train_label_batch)
 train_op = inception_resnet_v1.trainning(train_loss, learning_rate)
 train_acc = inception_resnet_v1.evaluation(train_logits, train_label_batch)
 
+# 验证操作定义
+val_logits = inception_resnet_v1.inference(val_batch, BATCH_SIZE, N_CLASSES)
+val_loss = inception_resnet_v1.losses(val_logits, val_label_batch)
+val_acc = inception_resnet_v1.evaluation(val_logits, val_label_batch)
 # 测试操作定义
 test_logits = inception_resnet_v1.inference(val_batch, BATCH_SIZE, N_CLASSES)
 test_loss = inception_resnet_v1.losses(test_logits, val_label_batch)
@@ -59,11 +62,11 @@ try:
     for step in np.arange(MAX_STEP):
         if coord.should_stop():
             break
-        _, tra_loss, tra_acc = sess.run([train_op, train_loss, train_acc])
+        _, tra_loss, tra_acc ,vali_loss, vali_acc = sess.run([train_op, train_loss, train_acc, val_loss, val_acc])
 
         # 每隔50步打印一次当前的loss以及acc，同时记录log，写入writer
         if step % 10 == 0:
-            print('Step %d, train loss = %.2f, train accuracy = %.2f%%' % (step, tra_loss, tra_acc * 100.0))
+            print('Step %d, train loss = %.2f, train accuracy = %.2f%%, val loss = %.2f, val accuracy = %.2f%%' % (step, tra_loss, tra_acc * 100.0,vali_loss * 100.0, vali_acc * 100.0))
             summary_str = sess.run(summary_op)
             train_writer.add_summary(summary_str, step)
         # 每隔100步，保存一次训练好的模型
