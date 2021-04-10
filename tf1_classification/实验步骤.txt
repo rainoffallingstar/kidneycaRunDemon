@@ -1,0 +1,18 @@
+yu 将文件放在f盘下，检查py文件中文件目录是否正确
+ 切换cmd到目录下
+ cd kidneycaRunDemon-Shiraishi-Mai
+ 进行resize操作
+ python3 resizechome.py && \
+ python3 resizenotca.py && \
+ python3 resizepapi.py && \
+ python3 dataaugothers12chome.py && \   
+ python3 dataaugothers12notca.py && \ 
+ python3 dataaugothers12papi.py 
+
+ 在model文件中将需要的model复制到kidneycaRunDemon-Shiraishi-Mai文件夹下
+ 修改train.py中“import XXX as model” 为你所选model.py的具体名字，修改MAX_step为你所需要，默认700
+ 
+ 进行训练
+ python3 train.py
+ 
+ test.py有bug，勿运行
